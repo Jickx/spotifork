@@ -11,8 +11,6 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_FILE_DIR'] = './.flask_session/'
 Session(app)
 
-SPOTIPY_REDIRECT_URI="http://127.0.0.1:8080"
-
 caches_folder = './.spotify_caches/'
 if not os.path.exists(caches_folder):
     os.makedirs(caches_folder)
