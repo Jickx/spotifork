@@ -1,0 +1,63 @@
+{% extends "layout.html" %}{% block title %}Spotifork{% endblock %}{% block table %}
+
+{% if database %}
+<table id="example" class="display">
+    <thead class="thead-light">
+        <tr class="text-left">
+            <th>Number</th>
+            <th>Artist</th>
+            <th>Trackname</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for data in database %}
+        <tr class="text-left">
+            <td>{{ loop.index }}</td>
+            <td>{{ data.artist }}</td>
+            <td>{{ data.track }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% if not year %}
+<h3 class="text-muted" style="text-align: center;">Please choose year</h4>
+{% endif %}
+
+{% endblock %}{% block menu %}
+{% if display_name %}
+<h4>{{ display_name }}</h4>
+<a href="/sign_out">Sign out</a>
+<hr>
+<form method="POST">
+    <div class="form-row align-items-center">
+        <div class="col-auto mb-3">
+            <select value="{{ selected_year }}" class="form-select w-auto" aria-label="Choose year" id="year"
+                name="year" placeholder="Default input" onchange="javascript:this.form.submit()">
+                {% if year %}
+                {% for years in number_of_years %}
+                <option value="{{ years }}" {% if ((year | int)==(years | int)) %}selected{% endif %}>{{ years }}
+                </option>
+                {% endfor %}
+                {% else %}
+                <option value="" disabled selected>Choose playlist year</option>
+                {% for years in number_of_years %}
+                <option value="{{ years }}">{{ years }}</option>
+                {% endfor %}
+                {% endif %}
+            </select>
+        </div>
+    </div>
+</form>
+{% if year %}
+<form method="post" action="/create_playlist">
+    <button class="btn btn-primary" type="submit" name="year" value="{{year}}">Create playlist</button>
+</form>
+{% endif %}
+{% else %}
+<h4><a href="{{ auth_url }}">Login in Spotify account</a></h4>
+<!-- <img src="/static/spotify.svg" alt="Spotify logo" /> -->
+{% endif %}
+
+
+{% endblock %}
