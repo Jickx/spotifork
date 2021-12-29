@@ -17,7 +17,6 @@ def searching_tracks():
 
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
 
-
     str = 0
     not_found = 0
 
